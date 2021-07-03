@@ -1,5 +1,5 @@
-import { getCustomRepository } from "typeorm"
-import { TagsRepositories } from "../repositories/TagsRepositories"
+import { getCustomRepository } from "typeorm";
+import { TagsRepositories } from "../../repositories/TagsRepositories";
 
 class CreateTagService {
   async execute(name: string) {
@@ -9,9 +9,9 @@ class CreateTagService {
       throw new Error("Insert a tag name");
     }
 
-    const tagAlreadyExists = await tagsRepositories.findOne({ name })
+    const tagAlreadyExists = await tagsRepositories.findOne({ name });
 
-    if(tagAlreadyExists) {
+    if (tagAlreadyExists) {
       throw new Error("Tag name already exists");
     }
 
@@ -23,5 +23,4 @@ class CreateTagService {
   }
 }
 
-
-export { CreateTagService }
+export { CreateTagService };

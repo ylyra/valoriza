@@ -1,7 +1,7 @@
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { getCustomRepository } from "typeorm";
-import { UsersRepositories } from "../repositories/UsersRepositories";
+import { UsersRepositories } from "../../repositories/UsersRepositories";
 
 type IAuthenticateRequest = {
   email: string;
@@ -24,14 +24,10 @@ class AuthenticateUserService {
       throw new Error("Email/Password incorrect.");
     }
 
-    const token = sign(
-      { email: user.email },
-      "v:kEWVv#EAf|2e_d;_W2G272S+6at7<dkc8H*5(X)[nl2&8}[T+wn+ #^GU?v4-<",
-      {
-        subject: user.id,
-        expiresIn: "1d",
-      }
-    );
+    const token = sign({ email: user.email }, process.env.JWT_SECRET_TOKEN, {
+      subject: user.id,
+      expiresIn: "1d",
+    });
 
     return token;
   }
